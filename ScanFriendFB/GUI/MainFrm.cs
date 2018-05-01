@@ -1,7 +1,6 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using ScanFriendFB;
 using ScanFriendFB.Properties;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using System.Configuration;
 
 namespace ScanFriendFB
 {
@@ -20,19 +18,16 @@ namespace ScanFriendFB
         #region Biến
 
         private readonly MaterialSkinManager skinManager;
+
+        private int colorSchemeIndex;
         public string token = string.Empty;
 
-        //public FBFBGraph.Instance FBGraph.Instance = new FBFBGraph.Instance();
         //
         private HashSet<User> users = new HashSet<User>();
 
-        private int colorSchemeIndex;
         private HashSet<Reaction> likes = new HashSet<Reaction>();
         private HashSet<Comment> cmts = new HashSet<Comment>();
-        private HashSet<Post> poPost = new HashSet<Post>();
         private HashSet<Post> post = new HashSet<Post>();
-        private HashSet<User> usercmt = new HashSet<User>();
-        private HashSet<User> userlike = new HashSet<User>();
         private HashSet<Reaction> lus = new HashSet<Reaction>();
         private HashSet<Comment> cus = new HashSet<Comment>();
         private HashSet<User> usersui = new HashSet<User>();
@@ -44,11 +39,12 @@ namespace ScanFriendFB
         private DataTable dtAction = new DataTable();
         private DataTable dtDeath = new DataTable();
         private DataTable dtUser = new DataTable();
+
+        //
         private int countDeathList;
 
         private int count;
         private int countPost;
-
         private int countAction;
         private int countUser;
 
@@ -198,24 +194,6 @@ namespace ScanFriendFB
             return false;
         }
 
-        private void UpdateRow(int index, User user)
-        {
-            base.Invoke((MethodInvoker)delegate
-            {
-                try
-                {
-                    dataGr.Rows[index].Cells[7].Value = user.likes;
-                    dataGr.Rows[index].Cells[8].Value = user.cmts;
-                    dataGr.Rows[index].Cells[9].Value = user.sum;
-                    dataGr.FirstDisplayedScrollingRowIndex = index;
-                }
-                catch (Exception ex)
-                {
-                    FBGraph.Instance.WriteLog(ex.ToString());
-                }
-            });
-        }
-
         private void InitTable()
         {
             dtStatistic.Columns.Add("fcheck");
@@ -258,43 +236,46 @@ namespace ScanFriendFB
             dtUser.Columns.Add("fsum");
         }
 
-        private void AddRow(User user)
+        private void AddRow(HashSet<User> user)
         {
-            DataRow row = dtStatistic.NewRow();
-            count++;
-            row["fcheck"] = "true";
-            row["fstt"] = count;
-            row["fid"] = user.id;
-            row["fname"] = user.name;
-            row["fgender"] = user.gender == "male" ? "Nam" : "Nữ";
-            row["frelationship_status"] = user.relationship_status;
-            row["fage_range"] = user.age_range.ToShortDateString();
-            row["flike"] = user.likes;
-            row["fcmt"] = user.cmts;
-            row["fsum"] = user.sum;
-            dtStatistic.Rows.Add(row);
-            base.Invoke((MethodInvoker)delegate
+            foreach (var item in user)
             {
-                try
+                DataRow row = dtStatistic.NewRow();
+                count++;
+                row["fcheck"] = "true";
+                row["fstt"] = count;
+                row["fid"] = item.id;
+                row["fname"] = item.name;
+                row["fgender"] = item.gender == "male" ? "Nam" : "Nữ";
+                row["frelationship_status"] = item.relationship_status;
+                row["fage_range"] = item.age_range.ToShortDateString();
+                row["flike"] = item.likes;
+                row["fcmt"] = item.cmts;
+                row["fsum"] = item.sum;
+                dtStatistic.Rows.Add(row);
+                base.Invoke((MethodInvoker)delegate
                 {
-                    int dem = dataGr.Rows.Add();
-                    dataGr.Rows[dem].Cells[0].Value = row["fcheck"].ToString();
-                    dataGr.Rows[dem].Cells[1].Value = int.Parse(row["fstt"].ToString());
-                    dataGr.Rows[dem].Cells[2].Value = row["fid"].ToString();
-                    dataGr.Rows[dem].Cells[3].Value = row["fname"].ToString();
-                    dataGr.Rows[dem].Cells[4].Value = row["fgender"].ToString();
-                    dataGr.Rows[dem].Cells[5].Value = row["frelationship_status"].ToString();
-                    dataGr.Rows[dem].Cells[6].Value = DateTime.Parse(row["fage_range"].ToString()).ToShortDateString();
-                    dataGr.Rows[dem].Cells[7].Value = row["flike"];
-                    dataGr.Rows[dem].Cells[8].Value = row["fcmt"];
-                    dataGr.Rows[dem].Cells[9].Value = row["fsum"];
-                    dataGr.FirstDisplayedScrollingRowIndex = dem;
-                }
-                catch (Exception ex)
-                {
-                    FBGraph.Instance.WriteLog(ex.ToString());
-                }
-            });
+                    try
+                    {
+                        int dem = dataGr.Rows.Add();
+                        dataGr.Rows[dem].Cells[0].Value = row["fcheck"].ToString();
+                        dataGr.Rows[dem].Cells[1].Value = int.Parse(row["fstt"].ToString());
+                        dataGr.Rows[dem].Cells[2].Value = row["fid"].ToString();
+                        dataGr.Rows[dem].Cells[3].Value = row["fname"].ToString();
+                        dataGr.Rows[dem].Cells[4].Value = row["fgender"].ToString();
+                        dataGr.Rows[dem].Cells[5].Value = row["frelationship_status"].ToString();
+                        dataGr.Rows[dem].Cells[6].Value = DateTime.Parse(row["fage_range"].ToString()).ToShortDateString();
+                        dataGr.Rows[dem].Cells[7].Value = row["flike"];
+                        dataGr.Rows[dem].Cells[8].Value = row["fcmt"];
+                        dataGr.Rows[dem].Cells[9].Value = int.Parse(row["fsum"].ToString());
+                        dataGr.FirstDisplayedScrollingRowIndex = dem;
+                    }
+                    catch (Exception ex)
+                    {
+                        FBGraph.Instance.WriteLog(ex.ToString());
+                    }
+                });
+            }
         }
 
         private void CopyRow(User user)
@@ -326,6 +307,53 @@ namespace ScanFriendFB
                     dgvDeathList.Rows[dem].Cells[7].Value = row["dlSum"];
 
                     dgvDeathList.FirstDisplayedScrollingRowIndex = dem;
+                }
+                catch (Exception ex)
+                {
+                    FBGraph.Instance.WriteLog(ex.ToString());
+                }
+            });
+        }
+
+        private void AddRowPost(Post po)
+        {
+            DataRow row = dtPost.NewRow();
+            countPost++;
+            row["fstt"] = countPost;
+            row["fid"] = po.id;
+            row["fdate"] = po.created_time.ToShortDateString();
+            row["fcontent"] = po.message;
+            row["fstory"] = po.story;
+            row["flink"] = po.link;
+            string tag = "";
+            if (po.with_tag.Count() > 0)
+            {
+                foreach (var ite in po.with_tag)
+                {
+                    tag += ite.name + ", ";
+                }
+            }
+            row["ftag"] = tag;
+            row["flike"] = po.reactions.Count();
+            row["fcmt"] = po.cmts.Count();
+            row["fsum"] = (po.reactions.Count() + po.cmts.Count());
+            dtPost.Rows.Add(row);
+            base.Invoke((MethodInvoker)delegate
+            {
+                try
+                {
+                    int dem = dataPost.Rows.Add();
+                    dataPost.Rows[dem].Cells[0].Value = int.Parse(row["fstt"].ToString());
+                    dataPost.Rows[dem].Cells[1].Value = row["fid"];
+                    dataPost.Rows[dem].Cells[2].Value = DateTime.Parse(row["fdate"].ToString()).ToShortDateString();
+                    dataPost.Rows[dem].Cells[3].Value = row["fcontent"];
+                    dataPost.Rows[dem].Cells[4].Value = row["fstory"];
+                    dataPost.Rows[dem].Cells[5].Value = row["flink"];
+                    dataPost.Rows[dem].Cells[6].Value = row["ftag"];
+                    dataPost.Rows[dem].Cells[7].Value = int.Parse(row["flike"].ToString());
+                    dataPost.Rows[dem].Cells[8].Value = int.Parse(row["fcmt"].ToString());
+                    dataPost.Rows[dem].Cells[9].Value = int.Parse(row["fsum"].ToString());
+                    dataPost.FirstDisplayedScrollingRowIndex = dem;
                 }
                 catch (Exception ex)
                 {
@@ -578,6 +606,7 @@ namespace ScanFriendFB
             var prog = TaskbarManager.Instance;
             prog.SetProgressState(TaskbarProgressBarState.Normal);
             prog.SetProgressValue(0, 0);
+
             new Thread((ThreadStart)delegate
             {
                 Stopwatch stopWatch = new Stopwatch();
@@ -612,27 +641,19 @@ namespace ScanFriendFB
                         return;
                     }
                     users.Clear();
-                    post.Clear();
                     likes.Clear();
                     cmts.Clear();
-                    updateStatus("Thống kê danh sách bạn bè ...");
+                    updateStatus("Đang lấy danh sách bạn bè ...");
                     users = FBGraph.Instance.GetFriendUids();
                     if (users.Count == 0)
                     {
                         updateStatus("Bạn bè không tồn tại!");
                         return;
                     }
-                    foreach (var item in users)
-                    {
-                        AddRow(item);
-                    }
-                    updateStatus("Thống kê danh sách bài viết ...");
-                    int dem = 0;
-                    post = FBGraph.Instance.GetPosts();
+                    updateStatus("Đang lấy danh sách bài viết ...");
                     if (post.Count == 0)
                     {
-                        updateStatus("Bài viết không tồn tại!");
-                        return;
+                        post = FBGraph.Instance.GetPosts();
                     }
                     int de = 0;
                     foreach (var item in post)
@@ -656,14 +677,13 @@ namespace ScanFriendFB
                         de++;
                         prog.SetProgressValue(de, post.Count - 1);
                     }
-                    updateStatus($"Đang cập nhật thông tin dữ liệu!");
+                    updateStatus($"Thống kê xong! Đang nhập dữ liệu!");
                     foreach (var ite in users)
                     {
                         ite.likes = likes.Where(x => x.id == ite.id).Count();
                         ite.cmts = cmts.Where(x => x.id == ite.id).Count();
-                        UpdateRow(dem, ite);
-                        dem++;
                     }
+                    AddRow(users);
                     users.Reverse();
                 }
                 catch
@@ -757,6 +777,7 @@ namespace ScanFriendFB
 
         private void MainFrm_Load(object sender, EventArgs e)
         {
+            lb1.Text = Application.ProductVersion;
             if (!TaskbarManager.IsPlatformSupported)
             {
                 MessageBox.Show($"Death Click không hỗ trợ cho hệ thống của bạn {Environment.NewLine}. Chỉ hỗ trợ từ windows 7 trở lên.");
@@ -811,10 +832,6 @@ namespace ScanFriendFB
             }).Start();
         }
 
-        #endregion Sự kiện
-
-        #region tab 2
-
         private void btnStatist_Click(object sender, EventArgs e)
         {
             countPost = 0;
@@ -855,36 +872,22 @@ namespace ScanFriendFB
                         return;
                     }
 
-                    updateStatus("Thống kê danh sách bài viết ...");
+                    updateStatus("Đang lấy danh sách bài viết ...");
+                    //poPost.Clear();
                     int postCount = int.Parse(numPost.Value.ToString());
-                    poPost.Clear();
-
-                    poPost = FBGraph.Instance.GetPosts();
-                    if (poPost.Count == 0)
+                    if (post.Count == 0)
                     {
-                        updateStatus("Bài viết không tồn tại!");
-                        return;
-                    }
-                    foreach (var item in poPost.Take(postCount))
-                    {
-                        AddRowPost(item, 0, 0);
+                        post = FBGraph.Instance.GetPosts();
                     }
                     int dem = 0;
-                    int like = 0;
-                    int cmt = 0;
-                    int sum = 0;
-                    foreach (var item in poPost.Take(postCount))
+                    foreach (var item in post.Take(postCount))
                     {
-                        updateStatus($"Đang thống kê like, cmt: {dem}/{poPost.Take(postCount).Count()} (ID: {item.id.Split('_')[1]})");
-                        like = item.reactions.Count();
-                        cmt = item.cmts.Count();
-                        sum = like + cmt;
-                        UpdateStatist(dem, like, cmt, sum);
+                        updateStatus($"Đang thống kê like, cmt: {dem}/{post.Take(postCount).Count()} (ID: {item.id.Split('_')[1]})");
                         dem++;
-                        prog.SetProgressValue(dem, poPost.Take(postCount).Count());
+                        AddRowPost(item);
+                        prog.SetProgressValue(dem, post.Take(postCount).Count());
                     }
-                    updateStatus($"Đang cập nhật thông tin dữ liệu!");
-                    users.Reverse();
+                    post.Reverse();
                 }
                 catch
                 {
@@ -893,7 +896,7 @@ namespace ScanFriendFB
                 base.Invoke((MethodInvoker)delegate
                 {
                     updateStatus("Đang xắp xếp ...");
-                    OderPost();
+                    dataPost.Sort(dataPost.Columns[9], ListSortDirection.Descending);
                     dataPost.FirstDisplayedScrollingRowIndex = 0;
                     btnCopy.Enabled = true;
                     btnScan.Enabled = true;
@@ -922,76 +925,6 @@ namespace ScanFriendFB
             }).Start();
         }
 
-        private void OderPost()
-        {
-            dataPost.Sort(dataPost.Columns[9], ListSortDirection.Descending);
-        }
-
-        private void UpdateStatist(int index, int like, int cmt, int sum)
-        {
-            base.Invoke((MethodInvoker)delegate
-            {
-                try
-                {
-                    dataPost.Rows[index].Cells[7].Value = like;
-                    dataPost.Rows[index].Cells[8].Value = cmt;
-                    dataPost.Rows[index].Cells[9].Value = sum;
-                    dataPost.FirstDisplayedScrollingRowIndex = index;
-                }
-                catch (Exception ex)
-                {
-                    FBGraph.Instance.WriteLog(ex.ToString());
-                }
-            });
-        }
-
-        private void AddRowPost(Post po, int like, int cmt)
-        {
-            DataRow row = dtPost.NewRow();
-            countPost++;
-            row["fstt"] = countPost;
-            row["fid"] = po.id;
-            row["fdate"] = po.created_time.ToShortDateString();
-            row["fcontent"] = po.message;
-            row["fstory"] = po.story;
-            row["flink"] = po.link;
-            string tag = "";
-            if (po.with_tag.Count() > 0)
-            {
-                foreach (var item in po.with_tag)
-                {
-                    tag += item.name + ", ";
-                }
-            }
-            row["ftag"] = tag;
-            row["flike"] = like;
-            row["fcmt"] = cmt;
-            row["fsum"] = like + cmt;
-            dtPost.Rows.Add(row);
-            base.Invoke((MethodInvoker)delegate
-            {
-                try
-                {
-                    int dem = dataPost.Rows.Add();
-                    dataPost.Rows[dem].Cells[0].Value = int.Parse(row["fstt"].ToString());
-                    dataPost.Rows[dem].Cells[1].Value = row["fid"];
-                    dataPost.Rows[dem].Cells[2].Value = DateTime.Parse(row["fdate"].ToString()).ToShortDateString();
-                    dataPost.Rows[dem].Cells[3].Value = row["fcontent"];
-                    dataPost.Rows[dem].Cells[4].Value = row["fstory"];
-                    dataPost.Rows[dem].Cells[5].Value = row["flink"];
-                    dataPost.Rows[dem].Cells[6].Value = row["ftag"];
-                    dataPost.Rows[dem].Cells[7].Value = row["flike"];
-                    dataPost.Rows[dem].Cells[8].Value = row["fcmt"];
-                    dataPost.Rows[dem].Cells[9].Value = row["fsum"];
-                    dataPost.FirstDisplayedScrollingRowIndex = dem;
-                }
-                catch (Exception ex)
-                {
-                    FBGraph.Instance.WriteLog(ex.ToString());
-                }
-            });
-        }
-
         private void btnAction_Click(object sender, EventArgs e)
         {
             int selected = this.cbbAction.SelectedIndex;
@@ -1016,7 +949,7 @@ namespace ScanFriendFB
                         {
                             if (item.Cells[1].Value.ToString() != null)
                             {
-                                foreach (var ite in poPost.Where(x => x.id == item.Cells[1].Value.ToString()))
+                                foreach (var ite in post.Where(x => x.id == item.Cells[1].Value.ToString()))
                                 {
                                     if (selected == 0)
                                     {
@@ -1026,7 +959,6 @@ namespace ScanFriendFB
                                         {
                                             cmtpost.Add(i);
                                         }
-                                        //cmtpost.UnionWith(data);
                                         foreach (var it in cmtpost.OrderBy(x => x.created_time))
                                         {
                                             AddRowActionCMT(it);
@@ -1113,17 +1045,13 @@ namespace ScanFriendFB
             });
         }
 
-        #endregion tab 2
-
-        #region tab 3
-
         private void btnUserUI_Click(object sender, EventArgs e)
         {
             countUser = 0;
             var prog = TaskbarManager.Instance;
             prog.SetProgressState(TaskbarProgressBarState.Indeterminate);
             prog.SetProgressValue(0, 0);
-            if (poPost.Count() > 0)
+            if (post.Count() > 0)
             {
                 new Thread((ThreadStart)delegate
                 {
@@ -1138,7 +1066,7 @@ namespace ScanFriendFB
                     try
                     {
                         int postCount = int.Parse(numPost.Value.ToString());
-                        if (poPost.Take(postCount).Count() > 0)
+                        if (post.Take(postCount).Count() > 0)
                         {
                             updateStatus($"Đang thống kê của {postCount} bài post!");
                             HashSet<Post> newpo = new HashSet<Post>();
@@ -1146,7 +1074,7 @@ namespace ScanFriendFB
                             {
                                 newpo.Clear();
                             }
-                            newpo.UnionWith(poPost.Take(postCount));
+                            newpo.UnionWith(post.Take(postCount));
                             usersui.Clear();
                             lus.Clear();
                             cus.Clear();
@@ -1155,13 +1083,8 @@ namespace ScanFriendFB
                                 usersui.Add(new User(item.id, item.name, item.gender, item.relationship_status, item.age_range));
                             }
 
-                            foreach (var item in usersui)
-                            {
-                                AddRowUser(item);
-                            }
-
                             int de = 0;
-                            foreach (var item in poPost.Take(postCount))
+                            foreach (var item in post.Take(postCount))
                             {
                                 updateStatus($"Đang thống kê like, cmt: {de}/{post.Take(postCount).Count()} (ID: {item.id.Split('_')[1]})");
                                 foreach (var ite in item.reactions)
@@ -1178,18 +1101,16 @@ namespace ScanFriendFB
                                         cus.Add(ite);
                                     }
                                 }
-                                prog.SetProgressValue(de, poPost.Take(postCount).Count());
+                                prog.SetProgressValue(de, post.Take(postCount).Count());
                                 de++;
                             }
-                            int dem = 0;
-                            updateStatus($"Đang cập nhật thông tin dữ liệu!");
-                            foreach (var ite in usersui)
+                            foreach (var item in usersui)
                             {
-                                ite.likes = lus.Where(x => x.id == ite.id).Count();
-                                ite.cmts = cus.Where(x => x.id == ite.id).Count();
-                                UpdateRowUser(dem, ite);
-                                dem++;
+                                item.likes = lus.Where(x => x.id == item.id).Count();
+                                item.cmts = cus.Where(x => x.id == item.id).Count();
                             }
+                            updateStatus($"Đang cập nhật thông tin dữ liệu!");
+                            AddRowUser(usersui);
                             usersui.Reverse();
                         }
                         else
@@ -1220,73 +1141,38 @@ namespace ScanFriendFB
             }
         }
 
-        private int CountLike(string id)
+        private void AddRowUser(HashSet<User> user)
         {
-            int dem = 0;
-            foreach (var item in poPost)
+            foreach (var item in user)
             {
-                dem += item.reactions.Where(x => x.id == id).Count();
+                DataRow row = dtUser.NewRow();
+                countUser++;
+                row["fstt"] = countUser;
+                row["fid"] = item.id;
+                row["fname"] = item.name;
+                row["flike"] = item.likes;
+                row["fcmt"] = item.cmts;
+                row["fsum"] = item.sum;
+                dtUser.Rows.Add(row);
+                base.Invoke((MethodInvoker)delegate
+                {
+                    try
+                    {
+                        int dem = dataUserUI.Rows.Add();
+                        dataUserUI.Rows[dem].Cells[0].Value = int.Parse(row["fstt"].ToString());
+                        dataUserUI.Rows[dem].Cells[1].Value = row["fid"].ToString();
+                        dataUserUI.Rows[dem].Cells[2].Value = row["fname"];
+                        dataUserUI.Rows[dem].Cells[3].Value = row["flike"].ToString();
+                        dataUserUI.Rows[dem].Cells[4].Value = row["fcmt"].ToString();
+                        dataUserUI.Rows[dem].Cells[5].Value = row["fsum"].ToString();
+                        dataUserUI.FirstDisplayedScrollingRowIndex = dem;
+                    }
+                    catch (Exception ex)
+                    {
+                        FBGraph.Instance.WriteLog(ex.ToString());
+                    }
+                });
             }
-            return dem;
-        }
-
-        private int CountCmt(string id)
-        {
-            int dem = 0;
-            foreach (var item in poPost)
-            {
-                dem += item.reactions.Where(x => x.id == id).Count();
-            }
-            return dem;
-        }
-
-        private void AddRowUser(User user)
-        {
-            DataRow row = dtUser.NewRow();
-            countUser++;
-            row["fstt"] = countUser;
-            row["fid"] = user.id;
-            row["fname"] = user.name;
-            row["flike"] = user.likes;
-            row["fcmt"] = user.cmts;
-            row["fsum"] = user.sum;
-            dtUser.Rows.Add(row);
-            base.Invoke((MethodInvoker)delegate
-            {
-                try
-                {
-                    int dem = dataUserUI.Rows.Add();
-                    dataUserUI.Rows[dem].Cells[0].Value = int.Parse(row["fstt"].ToString());
-                    dataUserUI.Rows[dem].Cells[1].Value = row["fid"].ToString();
-                    dataUserUI.Rows[dem].Cells[2].Value = row["fname"];
-                    dataUserUI.Rows[dem].Cells[3].Value = row["flike"].ToString();
-                    dataUserUI.Rows[dem].Cells[4].Value = row["fcmt"].ToString();
-                    dataUserUI.Rows[dem].Cells[5].Value = row["fsum"].ToString();
-                    dataUserUI.FirstDisplayedScrollingRowIndex = dem;
-                }
-                catch (Exception ex)
-                {
-                    FBGraph.Instance.WriteLog(ex.ToString());
-                }
-            });
-        }
-
-        private void UpdateRowUser(int index, User user)
-        {
-            base.Invoke((MethodInvoker)delegate
-            {
-                try
-                {
-                    dataUserUI.Rows[index].Cells[3].Value = user.likes;
-                    dataUserUI.Rows[index].Cells[4].Value = user.cmts;
-                    dataUserUI.Rows[index].Cells[5].Value = user.sum;
-                    dataUserUI.FirstDisplayedScrollingRowIndex = index;
-                }
-                catch (Exception ex)
-                {
-                    FBGraph.Instance.WriteLog(ex.ToString());
-                }
-            });
         }
 
         private HashSet<IUserFB> getListUser(HashSet<Post> po)
@@ -1356,7 +1242,10 @@ namespace ScanFriendFB
         private void numPost_ValueChanged(object sender, EventArgs e)
         {
             countPost = 0;
-            if (poPost.Count() > 0)
+            var prog = TaskbarManager.Instance;
+            prog.SetProgressState(TaskbarProgressBarState.Normal);
+            prog.SetProgressValue(0, 0);
+            if (post.Count() > 0)
             {
                 new Thread((ThreadStart)delegate
                 {
@@ -1369,25 +1258,16 @@ namespace ScanFriendFB
                     {
                         updateStatus("Thống kê danh sách bài viết ...");
                         int postCount = int.Parse(numPost.Value.ToString());
-                        foreach (var item in poPost.Take(postCount))
-                        {
-                            AddRowPost(item, 0, 0);
-                        }
-                        int dem = 0;
-                        int like = 0;
-                        int cmt = 0;
-                        int sum = 0;
-                        foreach (var item in poPost.Take(postCount))
-                        {
-                            updateStatus($"Đang thống kê like, cmt: {dem}/{poPost.Take(postCount).Count() - 1} (ID: {item.id.Split('_')[1]})");
-                            like = item.reactions.Count();
-                            cmt = item.cmts.Count();
-                            sum = like + cmt;
-                            UpdateStatist(dem, like, cmt, sum);
-                            dem++;
-                        }
                         updateStatus($"Đang cập nhật thông tin dữ liệu!");
-                        users.Reverse();
+                        int dem = 0;
+                        foreach (var item in post.Take(postCount))
+                        {
+                            updateStatus($"Đang thống kê like, cmt: {dem}/{post.Take(postCount).Count()} (ID: {item.id.Split('_')[1]})");
+                            dem++;
+                            AddRowPost(item);
+                            prog.SetProgressValue(dem, post.Take(postCount).Count());
+                        }
+                        post.Reverse();
                     }
                     catch
                     {
@@ -1396,7 +1276,7 @@ namespace ScanFriendFB
                     base.Invoke((MethodInvoker)delegate
                     {
                         updateStatus("Đang xắp xếp ...");
-                        OderPost();
+                        dataPost.Sort(dataPost.Columns[9], ListSortDirection.Descending);
                         updateStatus("Hoàn thành!");
                     });
                 }).Start();
@@ -1484,6 +1364,6 @@ namespace ScanFriendFB
             }
         }
 
-        #endregion tab 3
+        #endregion Sự kiện
     }
 }

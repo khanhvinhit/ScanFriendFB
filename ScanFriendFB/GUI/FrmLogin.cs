@@ -1,12 +1,10 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
-using ScanFriendFB;
 using ScanFriendFB.Properties;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using xNet;
-using System.Configuration;
 
 namespace ScanFriendFB
 {

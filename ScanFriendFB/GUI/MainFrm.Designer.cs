@@ -106,6 +106,8 @@
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnUserUI = new MaterialSkin.Controls.MaterialRaisedButton();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lb1 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -157,7 +159,7 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(849, 636);
+            this.materialLabel1.Location = new System.Drawing.Point(851, 636);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(101, 19);
@@ -969,6 +971,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.lb1);
+            this.tabPage4.Controls.Add(this.materialLabel9);
             this.tabPage4.Controls.Add(this.pictureBox1);
             this.tabPage4.Controls.Add(this.materialLabel7);
             this.tabPage4.Controls.Add(this.linkLabel2);
@@ -983,6 +987,34 @@
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "Bio";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // lb1
+            // 
+            this.lb1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lb1.AutoSize = true;
+            this.lb1.Depth = 0;
+            this.lb1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lb1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lb1.Location = new System.Drawing.Point(377, 339);
+            this.lb1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lb1.Name = "lb1";
+            this.lb1.Size = new System.Drawing.Size(17, 19);
+            this.lb1.TabIndex = 7;
+            this.lb1.Text = "0";
+            // 
+            // materialLabel9
+            // 
+            this.materialLabel9.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.materialLabel9.AutoSize = true;
+            this.materialLabel9.Depth = 0;
+            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel9.Location = new System.Drawing.Point(318, 339);
+            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel9.Name = "materialLabel9";
+            this.materialLabel9.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel9.TabIndex = 6;
+            this.materialLabel9.Text = "Version:";
             // 
             // pictureBox1
             // 
@@ -1081,10 +1113,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
             this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Location = new System.Drawing.Point(0, 63);
+            this.materialTabSelector1.Location = new System.Drawing.Point(0, 64);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(1067, 35);
+            this.materialTabSelector1.Size = new System.Drawing.Size(1062, 35);
             this.materialTabSelector1.TabIndex = 0;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
@@ -1268,5 +1300,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private MaterialSkin.Controls.MaterialLabel lb1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel9;
     }
 }
