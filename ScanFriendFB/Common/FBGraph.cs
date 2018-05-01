@@ -58,7 +58,7 @@ namespace ScanFriendFB
         public HashSet<User> GetFriendUids()
         {
             HashSet<User> frList = new HashSet<User>();
-            string url = "https://graph.facebook.com/v2.12/me/friends?fields=gender,name,relationship_status,birthday&limit=5000&access_token=" + token;
+            string url = "https://graph.facebook.com/v3.0/me/friends?fields=gender,name,relationship_status,birthday&limit=5000&access_token=" + token;
             try
             {
                 foreach (var item in JArray.Parse(JObject.Parse(req.Get(url, null).ToString()).GetValue("data").ToString()))
@@ -82,11 +82,13 @@ namespace ScanFriendFB
         public HashSet<Post> GetPosts()
         {
             HashSet<Post> uid_fr = new HashSet<Post>();
-            string url = "https://graph.facebook.com/v2.12/me/feed?fields=reactions.limit(50000),comments.limit(50000){from,message,created_time},created_time,message,story,link,with_tags&limit=5000&access_token=" + token;
+            string url = "https://graph.facebook.com/v3.0/me/feed?fields=reactions.limit(10000),comments.limit(10000){from,message,created_time},created_time,message,story,link,with_tags&limit=275&access_token=" + token;
+            int i = 0;
             while (!string.IsNullOrEmpty(url))
             {
                 try
                 {
+                    i++;
                     JObject ob = JObject.Parse(req.Get(url, null).ToString());
                     foreach (var item in JArray.Parse(ob.GetValue("data").ToString()))
                     {
@@ -144,13 +146,16 @@ namespace ScanFriendFB
 
                         uid_fr.Add(new Post(id, createdate, mes, story, link, with, likes, cmts));
                     }
-                    url = JObject.Parse(JObject.Parse(req.Get(url, null).ToString()).GetValue("paging").ToString()).GetValue("next").ToString();
+                    if (i < 19)
+                    {
+                        url = JObject.Parse(JObject.Parse(req.Get(url, null).ToString()).GetValue("paging").ToString()).GetValue("next").ToString();
+                    }
                 }
                 catch (NullReferenceException)
                 {
                     return uid_fr;
                 }
-                catch (Exception ex)
+                catch (Exception ex)// lỗi nó sẽ nhảy về đây
                 {
                     WriteLog(ex.ToString());
                 }
@@ -179,7 +184,7 @@ namespace ScanFriendFB
 
         public string GetPro()
         {
-            string url = "https://graph.facebook.com/v2.12/me?&access_token=" + token;
+            string url = "https://graph.facebook.com/v3.0/me?&access_token=" + token;
             try
             {
                 return JObject.Parse(req.Get(url, null).ToString()).GetValue("name").ToString();

@@ -1249,6 +1249,8 @@ namespace ScanFriendFB
             {
                 new Thread((ThreadStart)delegate
                 {
+                    Stopwatch stopWatch = new Stopwatch();
+                    stopWatch.Start();
                     base.Invoke((MethodInvoker)delegate
                     {
                         dataPost.Rows.Clear();
@@ -1277,7 +1279,11 @@ namespace ScanFriendFB
                     {
                         updateStatus("Đang xắp xếp ...");
                         dataPost.Sort(dataPost.Columns[9], ListSortDirection.Descending);
-                        updateStatus("Hoàn thành!");
+                        TimeSpan ts = stopWatch.Elapsed;
+                        string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                            ts.Hours, ts.Minutes, ts.Seconds,
+                            ts.Milliseconds / 10);
+                        updateStatus($"Hoàn thành! Tổng thời gian: {elapsedTime}.");
                     });
                 }).Start();
             }
