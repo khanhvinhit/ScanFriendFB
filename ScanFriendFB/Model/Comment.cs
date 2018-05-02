@@ -10,7 +10,6 @@ namespace ScanFriendFB
 
         public string message { get; set; }
         public string idmessage { get; set; }
-        public string gender { get; set; }
         public string relationship_status { get; set; }
         public DateTime created_time { get; set; }
         public DateTime age_range { get; set; }

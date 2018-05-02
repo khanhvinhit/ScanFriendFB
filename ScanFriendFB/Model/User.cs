@@ -12,7 +12,6 @@ namespace ScanFriendFB
 
         public int cmts { get; set; }
 
-        public string gender { get; set; }
         public string relationship_status { get; set; }
         public DateTime age_range { get; set; }
 
@@ -28,20 +27,18 @@ namespace ScanFriendFB
         {
         }
 
-        public User(string id, string name, string gender, string relationship_status, DateTime age_range)
+        public User(string id, string name, string relationship_status, DateTime age_range)
         {
             this.relationship_status = relationship_status;
             this.age_range = age_range;
             this.id = id;
             this.name = name;
-            this.gender = gender;
         }
 
-        public User(string id, string name, string gender, string relationship_status, DateTime age_range, int like, int cmt)
+        public User(string id, string name, string relationship_status, DateTime age_range, int like, int cmt)
         {
             this.id = id;
             this.name = name;
-            this.gender = gender;
             this.relationship_status = relationship_status;
             this.age_range = age_range;
             this.likes = like;

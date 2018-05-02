@@ -40,34 +40,14 @@
             this.btnCleanItem = new MaterialSkin.Controls.MaterialRaisedButton();
             this.lblSttUnf = new MaterialSkin.Controls.MaterialLabel();
             this.dgvDeathList = new System.Windows.Forms.DataGridView();
-            this.Column11 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnUnf = new MaterialSkin.Controls.MaterialRaisedButton();
             this.btnCopy = new MaterialSkin.Controls.MaterialRaisedButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbbGender = new System.Windows.Forms.ComboBox();
-            this.rdGender = new System.Windows.Forms.RadioButton();
             this.checkTotal = new System.Windows.Forms.RadioButton();
             this.numInteractive = new System.Windows.Forms.NumericUpDown();
             this.checkItem = new System.Windows.Forms.RadioButton();
             this.checkAll = new System.Windows.Forms.RadioButton();
             this.dataGr = new System.Windows.Forms.DataGridView();
-            this.Column12 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnScan = new MaterialSkin.Controls.MaterialRaisedButton();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnPriPost = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -119,6 +99,22 @@
             this.lbTB = new System.Windows.Forms.Label();
             this.btnSkin = new MaterialSkin.Controls.MaterialRaisedButton();
             this.btnLogOut = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.Column12 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -283,7 +279,6 @@
             this.Column7,
             this.Column8,
             this.Column9,
-            this.Column18,
             this.Column20,
             this.Column22,
             this.Column10});
@@ -294,48 +289,6 @@
             this.dgvDeathList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDeathList.Size = new System.Drawing.Size(1036, 179);
             this.dgvDeathList.TabIndex = 7;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "Chọn";
-            this.Column11.Name = "Column11";
-            this.Column11.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column11.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "STT";
-            this.Column7.Name = "Column7";
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "ID";
-            this.Column8.Name = "Column8";
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "Tên";
-            this.Column9.Name = "Column9";
-            // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "Giới tính";
-            this.Column18.Name = "Column18";
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "Tình trạng";
-            this.Column20.Name = "Column20";
-            // 
-            // Column22
-            // 
-            this.Column22.HeaderText = "Ngày sinh";
-            this.Column22.Name = "Column22";
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "Tổng";
-            this.Column10.Name = "Column10";
             // 
             // btnUnf
             // 
@@ -375,8 +328,6 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox1.Controls.Add(this.cbbGender);
-            this.groupBox1.Controls.Add(this.rdGender);
             this.groupBox1.Controls.Add(this.checkTotal);
             this.groupBox1.Controls.Add(this.numInteractive);
             this.groupBox1.Controls.Add(this.checkItem);
@@ -386,34 +337,6 @@
             this.groupBox1.Size = new System.Drawing.Size(646, 42);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            // 
-            // cbbGender
-            // 
-            this.cbbGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbGender.Enabled = false;
-            this.cbbGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbbGender.FormattingEnabled = true;
-            this.cbbGender.Items.AddRange(new object[] {
-            "Nam",
-            "Nữ"});
-            this.cbbGender.Location = new System.Drawing.Point(540, 11);
-            this.cbbGender.Name = "cbbGender";
-            this.cbbGender.Size = new System.Drawing.Size(100, 26);
-            this.cbbGender.TabIndex = 5;
-            this.cbbGender.SelectedIndexChanged += new System.EventHandler(this.cbbGender_SelectedIndexChanged);
-            // 
-            // rdGender
-            // 
-            this.rdGender.AutoSize = true;
-            this.rdGender.Enabled = false;
-            this.rdGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdGender.Location = new System.Drawing.Point(454, 12);
-            this.rdGender.Name = "rdGender";
-            this.rdGender.Size = new System.Drawing.Size(80, 22);
-            this.rdGender.TabIndex = 4;
-            this.rdGender.TabStop = true;
-            this.rdGender.Text = "Giới tính";
-            this.rdGender.UseVisualStyleBackColor = true;
             // 
             // checkTotal
             // 
@@ -483,7 +406,6 @@
             this.Column1,
             this.Column2,
             this.Column3,
-            this.Column17,
             this.Column19,
             this.Column21,
             this.Column4,
@@ -497,66 +419,6 @@
             this.dataGr.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGr.Size = new System.Drawing.Size(1036, 176);
             this.dataGr.TabIndex = 2;
-            // 
-            // Column12
-            // 
-            this.Column12.FillWeight = 44.5951F;
-            this.Column12.HeaderText = "Chọn";
-            this.Column12.Name = "Column12";
-            this.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Column1
-            // 
-            this.Column1.FillWeight = 40.60913F;
-            this.Column1.HeaderText = "STT";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.FillWeight = 119.1326F;
-            this.Column2.HeaderText = "ID";
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.FillWeight = 119.1326F;
-            this.Column3.HeaderText = "Tên";
-            this.Column3.Name = "Column3";
-            // 
-            // Column17
-            // 
-            this.Column17.FillWeight = 119.1326F;
-            this.Column17.HeaderText = "Giới tinh";
-            this.Column17.Name = "Column17";
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Tình trạng";
-            this.Column19.Name = "Column19";
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "Ngày sinh";
-            this.Column21.Name = "Column21";
-            // 
-            // Column4
-            // 
-            this.Column4.FillWeight = 119.1326F;
-            this.Column4.HeaderText = "Thích";
-            this.Column4.Name = "Column4";
-            // 
-            // Column5
-            // 
-            this.Column5.FillWeight = 119.1326F;
-            this.Column5.HeaderText = "Bình luận";
-            this.Column5.Name = "Column5";
-            // 
-            // Column6
-            // 
-            this.Column6.FillWeight = 119.1326F;
-            this.Column6.HeaderText = "Tổng";
-            this.Column6.Name = "Column6";
             // 
             // btnScan
             // 
@@ -1164,6 +1026,97 @@
             this.btnLogOut.UseVisualStyleBackColor = true;
             this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
             // 
+            // Column12
+            // 
+            this.Column12.FillWeight = 44.5951F;
+            this.Column12.HeaderText = "Chọn";
+            this.Column12.Name = "Column12";
+            this.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Column1
+            // 
+            this.Column1.FillWeight = 40.60913F;
+            this.Column1.HeaderText = "STT";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.FillWeight = 119.1326F;
+            this.Column2.HeaderText = "ID";
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.FillWeight = 119.1326F;
+            this.Column3.HeaderText = "Tên";
+            this.Column3.Name = "Column3";
+            // 
+            // Column19
+            // 
+            this.Column19.HeaderText = "Tình trạng";
+            this.Column19.Name = "Column19";
+            // 
+            // Column21
+            // 
+            this.Column21.HeaderText = "Ngày sinh";
+            this.Column21.Name = "Column21";
+            // 
+            // Column4
+            // 
+            this.Column4.FillWeight = 119.1326F;
+            this.Column4.HeaderText = "Thích";
+            this.Column4.Name = "Column4";
+            // 
+            // Column5
+            // 
+            this.Column5.FillWeight = 119.1326F;
+            this.Column5.HeaderText = "Bình luận";
+            this.Column5.Name = "Column5";
+            // 
+            // Column6
+            // 
+            this.Column6.FillWeight = 119.1326F;
+            this.Column6.HeaderText = "Tổng";
+            this.Column6.Name = "Column6";
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "Chọn";
+            this.Column11.Name = "Column11";
+            this.Column11.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column11.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "STT";
+            this.Column7.Name = "Column7";
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "ID";
+            this.Column8.Name = "Column8";
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Tên";
+            this.Column9.Name = "Column9";
+            // 
+            // Column20
+            // 
+            this.Column20.HeaderText = "Tình trạng";
+            this.Column20.Name = "Column20";
+            // 
+            // Column22
+            // 
+            this.Column22.HeaderText = "Ngày sinh";
+            this.Column22.Name = "Column22";
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "Tổng";
+            this.Column10.Name = "Column10";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1280,13 +1233,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private MaterialSkin.Controls.MaterialRaisedButton btnSkin;
-        private System.Windows.Forms.ComboBox cbbGender;
-        private System.Windows.Forms.RadioButton rdGender;
+        private MaterialSkin.Controls.MaterialLabel lb1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel9;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column22;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
@@ -1294,13 +1246,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private MaterialSkin.Controls.MaterialLabel lb1;
-        private MaterialSkin.Controls.MaterialLabel materialLabel9;
     }
 }

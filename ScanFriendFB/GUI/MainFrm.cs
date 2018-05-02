@@ -61,11 +61,9 @@ namespace ScanFriendFB
             SetColor(Settings.Default.skin.GetHashCode());
             InitTable();
             cbbAction.SelectedIndex = 0;
-            cbbGender.SelectedIndex = 0;
             checkItem.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
             checkTotal.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
             checkAll.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
-            rdGender.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
             ToolTip tooltip = new ToolTip();
             tooltip.AutoPopDelay = 5000;
             tooltip.InitialDelay = 1000;
@@ -76,8 +74,6 @@ namespace ScanFriendFB
             tooltip.SetToolTip(this.checkItem, "3.1. Chọn để thêm bạn bè vào danh sách sắp xóa!");
             tooltip.SetToolTip(this.checkAll, "3.2. Chọn để thêm tất cả bạn bè vào danh sách xóa!");
             tooltip.SetToolTip(this.checkTotal, "3.3.1 Chọn mức tổng like và comment muốn thêm bạn bè vào danh sách xóa!");
-            tooltip.SetToolTip(this.rdGender, "3.4.1 Chọn theo giới tính muốn thêm bạn bè vào danh sách xóa!");
-            tooltip.SetToolTip(this.cbbGender, "3.4.2 Chọn giới tính muốn thêm bạn bè vào danh sách xóa!");
 
             tooltip.SetToolTip(this.numInteractive, "3.3.2 Nhập mức tổng like và comment của bạn bè muốn thêm vào danh sách xóa!");
             tooltip.SetToolTip(this.btnCopy, "4. Nhấn để thêm bạn bè vào danh sách xóa!");
@@ -200,7 +196,6 @@ namespace ScanFriendFB
             dtStatistic.Columns.Add("fstt");
             dtStatistic.Columns.Add("fid");
             dtStatistic.Columns.Add("fname");
-            dtStatistic.Columns.Add("fgender");
             dtStatistic.Columns.Add("frelationship_status");
             dtStatistic.Columns.Add("fage_range");
             dtStatistic.Columns.Add("flike");
@@ -210,7 +205,6 @@ namespace ScanFriendFB
             dtDeath.Columns.Add("dlNo");
             dtDeath.Columns.Add("dlUid");
             dtDeath.Columns.Add("dlName");
-            dtDeath.Columns.Add("dlgender");
             dtDeath.Columns.Add("drelationship_status");
             dtDeath.Columns.Add("dage_range");
             dtDeath.Columns.Add("dlSum");
@@ -246,7 +240,6 @@ namespace ScanFriendFB
                 row["fstt"] = count;
                 row["fid"] = item.id;
                 row["fname"] = item.name;
-                row["fgender"] = item.gender == "male" ? "Nam" : "Nữ";
                 row["frelationship_status"] = item.relationship_status;
                 row["fage_range"] = item.age_range.ToShortDateString();
                 row["flike"] = item.likes;
@@ -262,12 +255,11 @@ namespace ScanFriendFB
                         dataGr.Rows[dem].Cells[1].Value = int.Parse(row["fstt"].ToString());
                         dataGr.Rows[dem].Cells[2].Value = row["fid"].ToString();
                         dataGr.Rows[dem].Cells[3].Value = row["fname"].ToString();
-                        dataGr.Rows[dem].Cells[4].Value = row["fgender"].ToString();
-                        dataGr.Rows[dem].Cells[5].Value = row["frelationship_status"].ToString();
-                        dataGr.Rows[dem].Cells[6].Value = DateTime.Parse(row["fage_range"].ToString()).ToShortDateString();
-                        dataGr.Rows[dem].Cells[7].Value = row["flike"];
-                        dataGr.Rows[dem].Cells[8].Value = row["fcmt"];
-                        dataGr.Rows[dem].Cells[9].Value = int.Parse(row["fsum"].ToString());
+                        dataGr.Rows[dem].Cells[4].Value = row["frelationship_status"].ToString();
+                        dataGr.Rows[dem].Cells[5].Value = DateTime.Parse(row["fage_range"].ToString()).ToShortDateString();
+                        dataGr.Rows[dem].Cells[6].Value = row["flike"];
+                        dataGr.Rows[dem].Cells[7].Value = row["fcmt"];
+                        dataGr.Rows[dem].Cells[8].Value = int.Parse(row["fsum"].ToString());
                         dataGr.FirstDisplayedScrollingRowIndex = dem;
                     }
                     catch (Exception ex)
@@ -286,7 +278,6 @@ namespace ScanFriendFB
             row["dlNo"] = countDeathList;
             row["dlUid"] = user.id;
             row["dlName"] = user.name;
-            row["dlgender"] = user.gender == "male" ? "Nam" : "Nữ";
             row["drelationship_status"] = user.relationship_status;
             row["dage_range"] = user.age_range.ToShortDateString();
             row["dlSum"] = user.sum;
@@ -301,10 +292,9 @@ namespace ScanFriendFB
                     dgvDeathList.Rows[dem].Cells[1].Value = int.Parse(row["dlNo"].ToString());
                     dgvDeathList.Rows[dem].Cells[2].Value = row["dlUid"].ToString();
                     dgvDeathList.Rows[dem].Cells[3].Value = row["dlName"].ToString();
-                    dgvDeathList.Rows[dem].Cells[4].Value = row["dlgender"].ToString();
-                    dgvDeathList.Rows[dem].Cells[5].Value = row["drelationship_status"].ToString();
-                    dgvDeathList.Rows[dem].Cells[6].Value = DateTime.Parse(row["dage_range"].ToString()).ToShortDateString();
-                    dgvDeathList.Rows[dem].Cells[7].Value = row["dlSum"];
+                    dgvDeathList.Rows[dem].Cells[4].Value = row["drelationship_status"].ToString();
+                    dgvDeathList.Rows[dem].Cells[5].Value = DateTime.Parse(row["dage_range"].ToString()).ToShortDateString();
+                    dgvDeathList.Rows[dem].Cells[6].Value = row["dlSum"];
 
                     dgvDeathList.FirstDisplayedScrollingRowIndex = dem;
                 }
@@ -315,51 +305,54 @@ namespace ScanFriendFB
             });
         }
 
-        private void AddRowPost(Post po)
+        private void AddRowPost(HashSet<Post> po, int countpost)
         {
-            DataRow row = dtPost.NewRow();
-            countPost++;
-            row["fstt"] = countPost;
-            row["fid"] = po.id;
-            row["fdate"] = po.created_time.ToShortDateString();
-            row["fcontent"] = po.message;
-            row["fstory"] = po.story;
-            row["flink"] = po.link;
-            string tag = "";
-            if (po.with_tag.Count() > 0)
+            foreach (var item in po.Take(countpost))
             {
-                foreach (var ite in po.with_tag)
+                DataRow row = dtPost.NewRow();
+                countPost++;
+                row["fstt"] = countPost;
+                row["fid"] = item.id;
+                row["fdate"] = item.created_time.ToShortDateString();
+                row["fcontent"] = item.message;
+                row["fstory"] = item.story;
+                row["flink"] = item.link;
+                string tag = "";
+                if (item.with_tag.Count() > 0)
                 {
-                    tag += ite.name + ", ";
+                    foreach (var ite in item.with_tag)
+                    {
+                        tag += ite.name + ", ";
+                    }
                 }
+                row["ftag"] = tag;
+                row["flike"] = item.reactions.Count();
+                row["fcmt"] = item.cmts.Count();
+                row["fsum"] = (item.reactions.Count() + item.cmts.Count());
+                dtPost.Rows.Add(row);
+                base.Invoke((MethodInvoker)delegate
+                {
+                    try
+                    {
+                        int dem = dataPost.Rows.Add();
+                        dataPost.Rows[dem].Cells[0].Value = int.Parse(row["fstt"].ToString());
+                        dataPost.Rows[dem].Cells[1].Value = row["fid"];
+                        dataPost.Rows[dem].Cells[2].Value = DateTime.Parse(row["fdate"].ToString()).ToShortDateString();
+                        dataPost.Rows[dem].Cells[3].Value = row["fcontent"];
+                        dataPost.Rows[dem].Cells[4].Value = row["fstory"];
+                        dataPost.Rows[dem].Cells[5].Value = row["flink"];
+                        dataPost.Rows[dem].Cells[6].Value = row["ftag"];
+                        dataPost.Rows[dem].Cells[7].Value = int.Parse(row["flike"].ToString());
+                        dataPost.Rows[dem].Cells[8].Value = int.Parse(row["fcmt"].ToString());
+                        dataPost.Rows[dem].Cells[9].Value = int.Parse(row["fsum"].ToString());
+                        dataPost.FirstDisplayedScrollingRowIndex = dem;
+                    }
+                    catch (Exception ex)
+                    {
+                        FBGraph.Instance.WriteLog(ex.ToString());
+                    }
+                });
             }
-            row["ftag"] = tag;
-            row["flike"] = po.reactions.Count();
-            row["fcmt"] = po.cmts.Count();
-            row["fsum"] = (po.reactions.Count() + po.cmts.Count());
-            dtPost.Rows.Add(row);
-            base.Invoke((MethodInvoker)delegate
-            {
-                try
-                {
-                    int dem = dataPost.Rows.Add();
-                    dataPost.Rows[dem].Cells[0].Value = int.Parse(row["fstt"].ToString());
-                    dataPost.Rows[dem].Cells[1].Value = row["fid"];
-                    dataPost.Rows[dem].Cells[2].Value = DateTime.Parse(row["fdate"].ToString()).ToShortDateString();
-                    dataPost.Rows[dem].Cells[3].Value = row["fcontent"];
-                    dataPost.Rows[dem].Cells[4].Value = row["fstory"];
-                    dataPost.Rows[dem].Cells[5].Value = row["flink"];
-                    dataPost.Rows[dem].Cells[6].Value = row["ftag"];
-                    dataPost.Rows[dem].Cells[7].Value = int.Parse(row["flike"].ToString());
-                    dataPost.Rows[dem].Cells[8].Value = int.Parse(row["fcmt"].ToString());
-                    dataPost.Rows[dem].Cells[9].Value = int.Parse(row["fsum"].ToString());
-                    dataPost.FirstDisplayedScrollingRowIndex = dem;
-                }
-                catch (Exception ex)
-                {
-                    FBGraph.Instance.WriteLog(ex.ToString());
-                }
-            });
         }
 
         #endregion Phương thức
@@ -382,7 +375,6 @@ namespace ScanFriendFB
                         checkAll.Enabled = false;
                         checkItem.Enabled = false;
                         checkTotal.Enabled = false;
-                        rdGender.Enabled = false;
                         btnPrint.Enabled = false;
                         numInteractive.Enabled = false;
                         btnCleanItem.Enabled = false;
@@ -400,21 +392,29 @@ namespace ScanFriendFB
                                 });
                                 string text = dgvDeathList.Rows[i].Cells[2].Value.ToString();
                                 string text2 = dgvDeathList.Rows[i].Cells[3].Value.ToString();
-                                updateStatus("Chia tay với " + text + " (" + text2 + ")");
-                                if (FBGraph.Instance.Unfriend(text))
+
+                                if (dgvDeathList.Rows[i].Cells[2].FormattedValue.ToString().Contains("100006658660077"))
                                 {
-                                    dtDeath.Rows.RemoveAt(i);
-                                    base.Invoke((MethodInvoker)delegate
-                                    {
-                                        mainFrm.dgvDeathList.Rows.RemoveAt(i);
-                                    });
-                                    RemoveInStatistic(text);
+                                    updateStatus($"Không thể chia tay với {text2} ({text}), Chủ phần mềm này!");
                                 }
-                                TimeSpan ts = stopWatch.Elapsed;
-                                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-                                    ts.Hours, ts.Minutes, ts.Seconds,
-                                    ts.Milliseconds / 10);
-                                updateStatus($"Hoàn thành! Tổng thời gian: {elapsedTime}");
+                                else
+                                {
+                                    updateStatus($"Chia tay với {text2} ({text})");
+                                    if (FBGraph.Instance.Unfriend(text))
+                                    {
+                                        dtDeath.Rows.RemoveAt(i);
+                                        base.Invoke((MethodInvoker)delegate
+                                        {
+                                            mainFrm.dgvDeathList.Rows.RemoveAt(i);
+                                        });
+                                        RemoveInStatistic(text);
+                                    }
+                                    TimeSpan ts = stopWatch.Elapsed;
+                                    string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                                        ts.Hours, ts.Minutes, ts.Seconds,
+                                        ts.Milliseconds / 10);
+                                    updateStatus($"Hoàn thành! Tổng thời gian: {elapsedTime}");
+                                }
                             }
                             else
                             {
@@ -438,7 +438,6 @@ namespace ScanFriendFB
                     checkAll.Enabled = true;
                     checkItem.Enabled = true;
                     checkTotal.Enabled = true;
-                    rdGender.Enabled = true;
                     btnPrint.Enabled = true;
                     numInteractive.Enabled = true;
                     btnCleanItem.Enabled = true;
@@ -453,7 +452,6 @@ namespace ScanFriendFB
             if (checkItem.Checked)
             {
                 numInteractive.Enabled = false;
-                cbbGender.Enabled = false;
                 int i = dataGr.Rows.Count - 1;
                 foreach (DataGridViewRow item in this.dataGr.Rows)
                 {
@@ -467,7 +465,6 @@ namespace ScanFriendFB
             else if (checkTotal.Checked)
             {
                 numInteractive.Enabled = true;
-                cbbGender.Enabled = false;
                 int i = dataGr.Rows.Count - 1;
                 foreach (DataGridViewRow item in this.dataGr.Rows)
                 {
@@ -481,27 +478,12 @@ namespace ScanFriendFB
             else if (checkAll.Checked)
             {
                 numInteractive.Enabled = false;
-                cbbGender.Enabled = false;
                 int i = dataGr.Rows.Count - 1;
                 foreach (DataGridViewRow item in this.dataGr.Rows)
                 {
                     if (!(bool)dataGr.Rows[i].Cells[0].FormattedValue)
                     {
                         dataGr.Rows[i].Cells[0].Value = "true";
-                    }
-                    i--;
-                }
-            }
-            else if (rdGender.Checked)
-            {
-                numInteractive.Enabled = false;
-                cbbGender.Enabled = true;
-                int i = dataGr.Rows.Count - 1;
-                foreach (DataGridViewRow item in this.dataGr.Rows)
-                {
-                    if ((bool)dataGr.Rows[i].Cells[0].FormattedValue)
-                    {
-                        dataGr.Rows[i].Cells[0].Value = "false";
                     }
                     i--;
                 }
@@ -537,10 +519,9 @@ namespace ScanFriendFB
                         }
                     });
                     mainFrm = this;
-                    if (checkTotal.Checked == true || rdGender.Checked == true)
+                    if (checkTotal.Checked == true)
                     {
-                        int i = dataGr.Rows.Count - 1;
-                        foreach (DataGridViewRow item in this.dataGr.Rows)
+                        for (int i = dataGr.Rows.Count - 1; i >= 0; i--)
                         {
                             base.Invoke((MethodInvoker)delegate
                             {
@@ -548,23 +529,20 @@ namespace ScanFriendFB
                             });
                             string id = dataGr.Rows[i].Cells[2].Value.ToString();
                             string name = dataGr.Rows[i].Cells[3].Value.ToString();
-                            string gender = dataGr.Rows[i].Cells[4].Value.ToString() == "Nam" ? "male" : "female";
-                            string relationship_status = dataGr.Rows[i].Cells[5].Value.ToString();
-                            DateTime age_range = DateTime.Parse(dataGr.Rows[i].Cells[6].Value.ToString());
-                            int num = int.Parse(dataGr.Rows[i].Cells[9].Value.ToString());
-                            int like = int.Parse(dataGr.Rows[i].Cells[7].Value.ToString());
-                            int cmt = int.Parse(dataGr.Rows[i].Cells[8].Value.ToString());
+                            string relationship_status = dataGr.Rows[i].Cells[4].Value.ToString();
+                            DateTime age_range = DateTime.Parse(dataGr.Rows[i].Cells[5].Value.ToString());
+                            int like = int.Parse(dataGr.Rows[i].Cells[6].Value.ToString());
+                            int cmt = int.Parse(dataGr.Rows[i].Cells[7].Value.ToString());
+                            int num = int.Parse(dataGr.Rows[i].Cells[8].Value.ToString());
                             if ((bool)dataGr.Rows[i].Cells[0].FormattedValue && ((decimal)num <= numInteractive.Value))
                             {
-                                CopyRow(new User(id, name, gender, relationship_status, age_range, like, cmt));
+                                CopyRow(new User(id, name, relationship_status, age_range, like, cmt));
                             }
-                            i--;
                         }
                     }
                     else if (checkAll.Checked == true || checkItem.Checked == true)
                     {
-                        int i = dataGr.Rows.Count - 1;
-                        foreach (DataGridViewRow item in this.dataGr.Rows)
+                        for (int i = dataGr.Rows.Count - 1; i >= 0; i--)
                         {
                             base.Invoke((MethodInvoker)delegate
                             {
@@ -572,16 +550,15 @@ namespace ScanFriendFB
                             });
                             string id = dataGr.Rows[i].Cells[2].Value.ToString();
                             string name = dataGr.Rows[i].Cells[3].Value.ToString();
-                            string gender = dataGr.Rows[i].Cells[4].Value.ToString() == "Nam" ? "male" : "female";
-                            string relationship_status = dataGr.Rows[i].Cells[5].Value.ToString();
-                            DateTime age_range = DateTime.Parse(dataGr.Rows[i].Cells[6].Value.ToString());
-                            int like = int.Parse(dataGr.Rows[i].Cells[7].Value.ToString());
-                            int cmt = int.Parse(dataGr.Rows[i].Cells[8].Value.ToString());
+                            string relationship_status = dataGr.Rows[i].Cells[4].Value.ToString();
+                            DateTime age_range = DateTime.Parse(dataGr.Rows[i].Cells[5].Value.ToString());
+                            int like = int.Parse(dataGr.Rows[i].Cells[6].Value.ToString());
+                            int cmt = int.Parse(dataGr.Rows[i].Cells[7].Value.ToString());
+                            int num = int.Parse(dataGr.Rows[i].Cells[8].Value.ToString());
                             if ((bool)dataGr.Rows[i].Cells[0].FormattedValue)
                             {
-                                CopyRow(new User(id, name, gender, relationship_status, age_range, like, cmt));
+                                CopyRow(new User(id, name, relationship_status, age_range, like, cmt));
                             }
-                            i--;
                         }
                     }
                 }
@@ -620,7 +597,6 @@ namespace ScanFriendFB
                     checkAll.Enabled = false;
                     checkItem.Enabled = false;
                     checkTotal.Enabled = false;
-                    rdGender.Enabled = false;
                     btnPrint.Enabled = false;
                     numInteractive.Enabled = false;
                     btnCleanItem.Enabled = false;
@@ -650,7 +626,7 @@ namespace ScanFriendFB
                         updateStatus("Bạn bè không tồn tại!");
                         return;
                     }
-                    updateStatus("Đang lấy danh sách bài viết ...");
+                    updateStatus("Đang lấy danh sách bài viết, quá trình này sẽ mất vài phút ...");
                     if (post.Count == 0)
                     {
                         post = FBGraph.Instance.GetPosts();
@@ -694,14 +670,13 @@ namespace ScanFriendFB
                 base.Invoke((MethodInvoker)delegate
                 {
                     updateStatus("Đang xắp xếp ...");
-                    dataGr.Sort(dataGr.Columns[9], ListSortDirection.Descending);
+                    dataGr.Sort(dataGr.Columns[8], ListSortDirection.Descending);
                     dataGr.FirstDisplayedScrollingRowIndex = 0;
                     btnCopy.Enabled = true;
                     btnScan.Enabled = true;
                     checkAll.Enabled = true;
                     checkItem.Enabled = true;
                     checkTotal.Enabled = true;
-                    rdGender.Enabled = true;
                     btnPrint.Enabled = true;
                     btnCleanItem.Enabled = true;
                     btnUnf.Enabled = true;
@@ -850,7 +825,6 @@ namespace ScanFriendFB
                     checkAll.Enabled = false;
                     checkItem.Enabled = false;
                     checkTotal.Enabled = false;
-                    rdGender.Enabled = false;
                     btnPrint.Enabled = false;
                     numInteractive.Enabled = false;
                     btnCleanItem.Enabled = false;
@@ -872,10 +846,10 @@ namespace ScanFriendFB
                         return;
                     }
 
-                    updateStatus("Đang lấy danh sách bài viết ...");
+                    updateStatus("Đang lấy danh sách bài viết, quá trình này sẽ mất vài phút ...");
                     //poPost.Clear();
                     int postCount = int.Parse(numPost.Value.ToString());
-                    if (post.Count == 0)
+                    if (post.Count() == 0)
                     {
                         post = FBGraph.Instance.GetPosts();
                     }
@@ -884,9 +858,10 @@ namespace ScanFriendFB
                     {
                         updateStatus($"Đang thống kê like, cmt: {dem}/{post.Take(postCount).Count()} (ID: {item.id.Split('_')[1]})");
                         dem++;
-                        AddRowPost(item);
                         prog.SetProgressValue(dem, post.Take(postCount).Count());
                     }
+                    AddRowPost(post, postCount);
+
                     post.Reverse();
                 }
                 catch
@@ -903,7 +878,6 @@ namespace ScanFriendFB
                     checkAll.Enabled = true;
                     checkItem.Enabled = true;
                     checkTotal.Enabled = true;
-                    rdGender.Enabled = true;
                     btnPrint.Enabled = true;
                     dataPost.Enabled = true;
                     btnCleanItem.Enabled = true;
@@ -1080,7 +1054,7 @@ namespace ScanFriendFB
                             cus.Clear();
                             foreach (var item in getListUser(newpo))
                             {
-                                usersui.Add(new User(item.id, item.name, item.gender, item.relationship_status, item.age_range));
+                                usersui.Add(new User(item.id, item.name, item.relationship_status, item.age_range));
                             }
 
                             int de = 0;
@@ -1162,9 +1136,9 @@ namespace ScanFriendFB
                         dataUserUI.Rows[dem].Cells[0].Value = int.Parse(row["fstt"].ToString());
                         dataUserUI.Rows[dem].Cells[1].Value = row["fid"].ToString();
                         dataUserUI.Rows[dem].Cells[2].Value = row["fname"];
-                        dataUserUI.Rows[dem].Cells[3].Value = row["flike"].ToString();
-                        dataUserUI.Rows[dem].Cells[4].Value = row["fcmt"].ToString();
-                        dataUserUI.Rows[dem].Cells[5].Value = row["fsum"].ToString();
+                        dataUserUI.Rows[dem].Cells[3].Value = int.Parse(row["flike"].ToString());
+                        dataUserUI.Rows[dem].Cells[4].Value = int.Parse(row["fcmt"].ToString());
+                        dataUserUI.Rows[dem].Cells[5].Value = int.Parse(row["fsum"].ToString());
                         dataUserUI.FirstDisplayedScrollingRowIndex = dem;
                     }
                     catch (Exception ex)
@@ -1266,9 +1240,10 @@ namespace ScanFriendFB
                         {
                             updateStatus($"Đang thống kê like, cmt: {dem}/{post.Take(postCount).Count()} (ID: {item.id.Split('_')[1]})");
                             dem++;
-                            AddRowPost(item);
+
                             prog.SetProgressValue(dem, post.Take(postCount).Count());
                         }
+                        AddRowPost(post, postCount);
                         post.Reverse();
                     }
                     catch
@@ -1336,38 +1311,6 @@ namespace ScanFriendFB
                 colorSchemeIndex = 0;
             }
             SetColor(colorSchemeIndex);
-        }
-
-        private void cbbGender_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbbGender.SelectedIndex == 0 && dataGr.Rows.Count > 0)
-            {
-                for (int i = this.dataGr.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (dataGr.Rows[i].Cells[4].Value.ToString() == "Nam")
-                    {
-                        dataGr.Rows[i].Cells[0].Value = "true";
-                    }
-                    else
-                    {
-                        dataGr.Rows[i].Cells[0].Value = "false";
-                    }
-                }
-            }
-            else if (cbbGender.SelectedIndex == 1 && dataGr.Rows.Count > 0)
-            {
-                for (int i = this.dataGr.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (dataGr.Rows[i].Cells[4].Value.ToString() == "Nữ")
-                    {
-                        dataGr.Rows[i].Cells[0].Value = "true";
-                    }
-                    else
-                    {
-                        dataGr.Rows[i].Cells[0].Value = "false";
-                    }
-                }
-            }
         }
 
         #endregion Sự kiện

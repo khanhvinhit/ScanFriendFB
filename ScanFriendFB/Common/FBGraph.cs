@@ -58,17 +58,16 @@ namespace ScanFriendFB
         public HashSet<User> GetFriendUids()
         {
             HashSet<User> frList = new HashSet<User>();
-            string url = "https://graph.facebook.com/v3.0/me/friends?fields=gender,name,relationship_status,birthday&limit=5000&access_token=" + token;
+            string url = "https://graph.facebook.com/v2.12/me/friends?fields=name,relationship_status,birthday&limit=5000&access_token=" + token;
             try
             {
                 foreach (var item in JArray.Parse(JObject.Parse(req.Get(url, null).ToString()).GetValue("data").ToString()))
                 {
                     string id = JObject.Parse(item.ToString()).ContainsKey("id") ? JObject.Parse(item.ToString()).GetValue("id").ToString() : "";
                     string name = JObject.Parse(item.ToString()).ContainsKey("name") ? JObject.Parse(item.ToString()).GetValue("name").ToString() : "";
-                    string gender = JObject.Parse(item.ToString()).ContainsKey("gender") ? JObject.Parse(item.ToString()).GetValue("gender").ToString() : "";
                     string relationship_status = JObject.Parse(item.ToString()).ContainsKey("relationship_status") ? JObject.Parse(item.ToString()).GetValue("relationship_status").ToString() : "";
                     DateTime age_range = JObject.Parse(item.ToString()).ContainsKey("birthday") ? DateTime.Parse(JObject.Parse(item.ToString()).GetValue("birthday").ToString()) : DateTime.Now;
-                    frList.Add(new User(id, name, gender, relationship_status, age_range));
+                    frList.Add(new User(id, name, relationship_status, age_range));
                 }
             }
             catch (Exception ex)
@@ -82,13 +81,12 @@ namespace ScanFriendFB
         public HashSet<Post> GetPosts()
         {
             HashSet<Post> uid_fr = new HashSet<Post>();
-            string url = "https://graph.facebook.com/v3.0/me/feed?fields=reactions.limit(10000),comments.limit(10000){from,message,created_time},created_time,message,story,link,with_tags&limit=275&access_token=" + token;
+            string url = "https://graph.facebook.com/v2.12/me/feed?fields=reactions.limit(10000),comments.limit(10000){from,message,created_time},created_time,message,story,link,with_tags&limit=275&access_token=" + token;
             int i = 0;
             while (!string.IsNullOrEmpty(url))
             {
                 try
                 {
-                    i++;
                     JObject ob = JObject.Parse(req.Get(url, null).ToString());
                     foreach (var item in JArray.Parse(ob.GetValue("data").ToString()))
                     {
@@ -146,9 +144,15 @@ namespace ScanFriendFB
 
                         uid_fr.Add(new Post(id, createdate, mes, story, link, with, likes, cmts));
                     }
-                    if (i < 19)
+                    i++;
+
+                    if (i < 19 && JObject.Parse(req.Get(url, null).ToString()).ContainsKey("paging"))
                     {
                         url = JObject.Parse(JObject.Parse(req.Get(url, null).ToString()).GetValue("paging").ToString()).GetValue("next").ToString();
+                    }
+                    else
+                    {
+                        url = string.Empty;
                     }
                 }
                 catch (NullReferenceException)
@@ -184,7 +188,7 @@ namespace ScanFriendFB
 
         public string GetPro()
         {
-            string url = "https://graph.facebook.com/v3.0/me?&access_token=" + token;
+            string url = "https://graph.facebook.com/v2.12/me?&access_token=" + token;
             try
             {
                 return JObject.Parse(req.Get(url, null).ToString()).GetValue("name").ToString();

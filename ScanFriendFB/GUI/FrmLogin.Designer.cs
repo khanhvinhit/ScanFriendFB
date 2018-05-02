@@ -32,14 +32,14 @@
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.checkSave = new MaterialSkin.Controls.MaterialCheckBox();
-            this.btnLoginPwd = new MaterialSkin.Controls.MaterialRaisedButton();
             this.txtPassword = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.txtEmail = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.txtClear = new MaterialSkin.Controls.MaterialRaisedButton();
             this.txtXS = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.txtUID = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.checkSave = new MaterialSkin.Controls.MaterialCheckBox();
+            this.btnLoginPwd = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.txtClear = new MaterialSkin.Controls.MaterialRaisedButton();
             this.lbsttL = new System.Windows.Forms.Label();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -81,42 +81,9 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(334, 96);
+            this.tabPage1.Size = new System.Drawing.Size(334, 69);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Tài khoản";
-            // 
-            // checkSave
-            // 
-            this.checkSave.AutoSize = true;
-            this.checkSave.Depth = 0;
-            this.checkSave.Font = new System.Drawing.Font("Roboto", 10F);
-            this.checkSave.Location = new System.Drawing.Point(6, 196);
-            this.checkSave.Margin = new System.Windows.Forms.Padding(0);
-            this.checkSave.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.checkSave.MouseState = MaterialSkin.MouseState.HOVER;
-            this.checkSave.Name = "checkSave";
-            this.checkSave.Ripple = true;
-            this.checkSave.Size = new System.Drawing.Size(60, 30);
-            this.checkSave.TabIndex = 2;
-            this.checkSave.Text = "Save";
-            this.checkSave.UseVisualStyleBackColor = true;
-            // 
-            // btnLoginPwd
-            // 
-            this.btnLoginPwd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoginPwd.AutoSize = true;
-            this.btnLoginPwd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnLoginPwd.Depth = 0;
-            this.btnLoginPwd.Icon = null;
-            this.btnLoginPwd.Location = new System.Drawing.Point(249, 196);
-            this.btnLoginPwd.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnLoginPwd.Name = "btnLoginPwd";
-            this.btnLoginPwd.Primary = true;
-            this.btnLoginPwd.Size = new System.Drawing.Size(99, 36);
-            this.btnLoginPwd.TabIndex = 3;
-            this.btnLoginPwd.Text = "Đăng nhập";
-            this.btnLoginPwd.UseVisualStyleBackColor = true;
-            this.btnLoginPwd.Click += new System.EventHandler(this.btnLoginPwd_Click);
             // 
             // txtPassword
             // 
@@ -171,23 +138,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Cookie";
             // 
-            // txtClear
-            // 
-            this.txtClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtClear.AutoSize = true;
-            this.txtClear.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.txtClear.Depth = 0;
-            this.txtClear.Icon = null;
-            this.txtClear.Location = new System.Drawing.Point(195, 196);
-            this.txtClear.MouseState = MaterialSkin.MouseState.HOVER;
-            this.txtClear.Name = "txtClear";
-            this.txtClear.Primary = true;
-            this.txtClear.Size = new System.Drawing.Size(48, 36);
-            this.txtClear.TabIndex = 3;
-            this.txtClear.Text = "Xóa";
-            this.txtClear.UseVisualStyleBackColor = true;
-            this.txtClear.Click += new System.EventHandler(this.txtClear_Click);
-            // 
             // txtXS
             // 
             this.txtXS.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -228,6 +178,56 @@
             this.txtUID.TabStop = false;
             this.txtUID.UseSystemPasswordChar = false;
             this.txtUID.TextChanged += new System.EventHandler(this.txtUID_TextChanged);
+            // 
+            // checkSave
+            // 
+            this.checkSave.AutoSize = true;
+            this.checkSave.Depth = 0;
+            this.checkSave.Font = new System.Drawing.Font("Roboto", 10F);
+            this.checkSave.Location = new System.Drawing.Point(6, 196);
+            this.checkSave.Margin = new System.Windows.Forms.Padding(0);
+            this.checkSave.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkSave.MouseState = MaterialSkin.MouseState.HOVER;
+            this.checkSave.Name = "checkSave";
+            this.checkSave.Ripple = true;
+            this.checkSave.Size = new System.Drawing.Size(60, 30);
+            this.checkSave.TabIndex = 2;
+            this.checkSave.Text = "Save";
+            this.checkSave.UseVisualStyleBackColor = true;
+            // 
+            // btnLoginPwd
+            // 
+            this.btnLoginPwd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoginPwd.AutoSize = true;
+            this.btnLoginPwd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnLoginPwd.Depth = 0;
+            this.btnLoginPwd.Icon = null;
+            this.btnLoginPwd.Location = new System.Drawing.Point(249, 196);
+            this.btnLoginPwd.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnLoginPwd.Name = "btnLoginPwd";
+            this.btnLoginPwd.Primary = true;
+            this.btnLoginPwd.Size = new System.Drawing.Size(99, 36);
+            this.btnLoginPwd.TabIndex = 3;
+            this.btnLoginPwd.Text = "Đăng nhập";
+            this.btnLoginPwd.UseVisualStyleBackColor = true;
+            this.btnLoginPwd.Click += new System.EventHandler(this.btnLoginPwd_Click);
+            // 
+            // txtClear
+            // 
+            this.txtClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtClear.AutoSize = true;
+            this.txtClear.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.txtClear.Depth = 0;
+            this.txtClear.Icon = null;
+            this.txtClear.Location = new System.Drawing.Point(195, 196);
+            this.txtClear.MouseState = MaterialSkin.MouseState.HOVER;
+            this.txtClear.Name = "txtClear";
+            this.txtClear.Primary = true;
+            this.txtClear.Size = new System.Drawing.Size(48, 36);
+            this.txtClear.TabIndex = 3;
+            this.txtClear.Text = "Xóa";
+            this.txtClear.UseVisualStyleBackColor = true;
+            this.txtClear.Click += new System.EventHandler(this.txtClear_Click);
             // 
             // lbsttL
             // 

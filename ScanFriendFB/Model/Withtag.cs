@@ -8,7 +8,6 @@ namespace ScanFriendFB
 
         public string name { get; set; }
 
-        public string gender { get; set; }
         public string relationship_status { get; set; }
         public DateTime age_range { get; set; }
 
