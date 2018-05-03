@@ -799,7 +799,15 @@ namespace ScanFriendFB
                     }
                     dt.Rows.Add(dRow);
                 }
-                ExportToExcel.Instance.Export(dt, "Danh sach", "DANH SÁCH BẠN BÈ TRÊN FACEBOOK");
+                if (dt.Rows.Count <= 0)
+                {
+                    updateStatus("Vui lòng cập nhật dữ liệu.");
+                }
+                else
+                {
+                    ExportToExcel.Instance.Export(dt, "Danh sach", "DANH SÁCH BẠN BÈ TRÊN FACEBOOK");
+                }
+
                 base.Invoke((MethodInvoker)delegate
                 {
                     btnPrint.Enabled = true;
@@ -1203,7 +1211,14 @@ namespace ScanFriendFB
                         }
                         dt.Rows.Add(dRow);
                     }
-                    ExportToExcel.Instance.Export(dt, "Danh sach", "DANH SÁCH TÀI KHOẢN TRÊN FACEBOOK");
+                    if (dt.Rows.Count <= 0)
+                    {
+                        updateStatus("Vui lòng cập nhật dữ liệu.");
+                    }
+                    else
+                    {
+                        ExportToExcel.Instance.Export(dt, "Danh sach", "DANH SÁCH TÀI KHOẢN TRÊN FACEBOOK");
+                    }
                 }
 
                 base.Invoke((MethodInvoker)delegate
@@ -1293,7 +1308,14 @@ namespace ScanFriendFB
                         }
                         dt.Rows.Add(dRow);
                     }
-                    ExportToExcel.Instance.Export(dt, "Danh sach", "DANH SÁCH BÀI ĐĂNG TRÊN FACEBOOK");
+                    if (dt.Rows.Count <= 0)
+                    {
+                        updateStatus("Vui lòng cập nhật dữ liệu.");
+                    }
+                    else
+                    {
+                        ExportToExcel.Instance.Export(dt, "Danh sach", "DANH SÁCH BÀI ĐĂNG TRÊN FACEBOOK");
+                    }
                 }
 
                 base.Invoke((MethodInvoker)delegate
